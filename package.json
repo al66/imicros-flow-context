@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest --coverage --no-cache",
-    "test-local": "jest --coverage --no-cache --config=local.js"
+    "test-local": "jest --coverage --no-cache --config=local.js",
+    "test-context": "jest test/context.spec.js --no-cache --config=local.js"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -44,11 +45,14 @@
   },
   "homepage": "https://github.com/al66/imicros-context#readme",
   "devDependencies": {
-    "coveralls": "^3.0.3",
-    "jest": "^24.3.1",
-    "moleculer": "^0.13.7"
+    "coveralls": "^3.0.7",
+    "jest": "^24.9.0",
+    "moleculer": "^0.13.11",
+    "uuid4": "^1.1.4"
   },
   "dependencies": {
-    "ioredis": "^4.9.0"
+    "cassandra-driver": "^4.3.1",
+    "imicros-acl": "0.0.3",
+    "lodash": "^4.17.15"
   }
 }
