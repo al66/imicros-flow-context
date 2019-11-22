@@ -6,6 +6,10 @@ const uuidv4 = require("uuid/v4");
 const timestamp = Date.now();
 const ownerId = `owner-${timestamp}`;
 const instance = uuidv4();
+const keys = {
+    current: uuidv4(),
+    previous: uuidv4()
+};
 
 const AclMock = {
     localAction(next, action) {
@@ -28,9 +32,31 @@ const AclMock = {
     }    
 };
 
+// mock keys service
+const KeysMock = {
+    name: "keys",
+    actions: {
+        getOek: {
+            handler(ctx) {
+                if (!ctx.params || !ctx.params.service) throw new Error("Missing service name");
+                if ( ctx.params.id == keys.previous ) {
+                    return {
+                        id: keys.previous,
+                        key: "myPreviousSecret"
+                    };    
+                }
+                return {
+                    id: keys.current,
+                    key: "mySecret"
+                };
+            }
+        }
+    }
+};
+
 describe("Test context service", () => {
 
-    let broker, service, opts;
+    let broker, service, opts, keyService;
     beforeAll(() => {
     });
     
@@ -45,10 +71,16 @@ describe("Test context service", () => {
                 logger: console,
                 logLevel: "info" //"debug"
             });
+            keyService = await broker.createService(KeysMock);
             service = await broker.createService(Context, Object.assign({ 
                 settings: { 
                     cassandra: {
-                        contactPoints: process.env.CASSANDRA_CONTACTPOINTS || "127.0.0.1" 
+                        contactPoints: process.env.CASSANDRA_CONTACTPOINTS || "127.0.0.1", 
+                        datacenter: process.env.CASSANDRA_DATACENTER || "datacenter1", 
+                        keyspace: process.env.CASSANDRA_KEYSPACE || "imicros_flow" 
+                    },
+                    actions: {
+                        getOek: "keys.getOek"
                     },
                     redis: {
                         port: process.env.REDIS_PORT || 6379,
@@ -56,10 +88,12 @@ describe("Test context service", () => {
                         password: process.env.REDIS_AUTH || "",
                         db: process.env.REDIS_DB || 0,
                     }
-                }
+                },
+                dependencies: ["keys"]
             }));
             await broker.start();
             expect(service).toBeDefined();
+            expect(keyService).toBeDefined();
         });
 
     });

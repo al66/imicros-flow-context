@@ -4,13 +4,18 @@
 
 [Moleculer](https://github.com/moleculerjs/moleculer) service for process instances context store
 
+All values are encrypted before stored in cassandra database.
+
 ## Installation
 ```
 $ npm install imicros-context --save
 ```
-## Dependencies
-Requires middleware AclMiddleware or similar (use of AclMixin):
+## Dependencies / Requirements
+Requires broker middleware AclMiddleware or similar (usage of AclMixin):
 - [imicros-acl](https://github.com/al66/imicros-acl)
+
+Reuires a running key server for retrieving the owner encryption keys:
+- [imicros-keys](https://github.com/al66/imicros-keys)
 
 Requires a running cassandra node/cluster.
 
@@ -25,7 +30,8 @@ broker = new ServiceBroker({
 broker.createService(Streams, Object.assign({ 
     settings: { 
         cassandra: {
-            contactPoints: process.env.CASSANDRA_CONTACTPOINTS || "127.0.0.1" 
+            contactPoints: process.env.CASSANDRA_CONTACTPOINTS || "127.0.0.1", 
+            keyspace: process.env.CASSANDRA_KEYSPACE || "imicros"
         }
     }
 }));
