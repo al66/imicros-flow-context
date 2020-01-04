@@ -1,5 +1,5 @@
 {
-  "name": "imicros-context",
+  "name": "imicros-flow-context",
   "version": "0.0.1",
   "description": "Moleculer persistent context store",
   "main": "index.js",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/al66/imicros-context.git"
+    "url": "git+https://github.com/al66/imicros-flow-context.git"
   },
   "keywords": [
     "Moleculer",
@@ -41,13 +41,13 @@
   "author": "Andreas Leinen <andreas.leinen@imicros.de> (www.imicros.de)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/al66/imicros-context/issues"
+    "url": "https://github.com/al66/imicros-flow-context/issues"
   },
-  "homepage": "https://github.com/al66/imicros-context#readme",
+  "homepage": "https://github.com/al66/imicros-flow-context#readme",
   "devDependencies": {
-    "coveralls": "^3.0.7",
+    "coveralls": "^3.0.9",
     "jest": "^24.9.0",
-    "moleculer": "^0.13.11",
+    "moleculer": "^0.13.12",
     "uuid4": "^1.1.4"
   },
   "dependencies": {

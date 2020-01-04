@@ -1,6 +1,6 @@
-# imicros-context
-[![Build Status](https://travis-ci.org/al66/imicros-context.svg?branch=master)](https://travis-ci.org/al66/imicros-context)
-[![Coverage Status](https://coveralls.io/repos/github/al66/imicros-context/badge.svg?branch=master)](https://coveralls.io/github/al66/imicros-context?branch=master)
+# imicros-flow-context
+[![Build Status](https://travis-ci.org/al66/imicros-flow-context.svg?branch=master)](https://travis-ci.org/al66/imicros-flow-context)
+[![Coverage Status](https://coveralls.io/repos/github/al66/imicros-flow-context/badge.svg?branch=master)](https://coveralls.io/github/al66/imicros-flow-context?branch=master)
 
 [Moleculer](https://github.com/moleculerjs/moleculer) service for process instances context store
 
@@ -8,7 +8,7 @@ All values are encrypted before stored in cassandra database.
 
 ## Installation
 ```
-$ npm install imicros-context --save
+$ npm install imicros-flow-context --save
 ```
 ## Dependencies / Requirements
 Requires broker middleware AclMiddleware or similar (usage of AclMixin):
@@ -22,7 +22,7 @@ Requires a running cassandra node/cluster.
 # Usage
 ```js
 const { ServiceBroker } = require("moleculer");
-const { Context } = require("imicros-context");
+const { Context } = require("imicros-flow-context");
 
 broker = new ServiceBroker({
     logger: console
