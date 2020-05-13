@@ -1,6 +1,6 @@
 {
   "name": "imicros-flow-context",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Moleculer persistent context store",
   "main": "index.js",
   "directories": {
@@ -45,14 +45,13 @@
   },
   "homepage": "https://github.com/al66/imicros-flow-context#readme",
   "devDependencies": {
-    "coveralls": "^3.0.9",
-    "jest": "^24.9.0",
-    "moleculer": "^0.13.12",
-    "uuid4": "^1.1.4"
+    "jest": "^26.0.1",
+    "moleculer": "^0.14.6",
+    "uuid": "^8.0.0"
   },
   "dependencies": {
-    "cassandra-driver": "^4.3.1",
-    "imicros-acl": "0.0.3",
+    "cassandra-driver": "^4.5.2",
+    "imicros-acl": "^0.0.4",
     "lodash": "^4.17.15"
   }
 }
