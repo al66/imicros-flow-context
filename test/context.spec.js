@@ -95,7 +95,7 @@ describe("Test context service", () => {
     describe("Test context ", () => {
 
         beforeEach(() => {
-            opts = { meta: { user: { id: `1-${timestamp}` , email: `1-${timestamp}@host.com` }, groupId: `g-${timestamp}` } };
+            opts = { meta: { user: { id: `1-${timestamp}` , email: `1-${timestamp}@host.com` }, ownerId: `g-${timestamp}` } };
         });
 
         it("it should create context A with key a1 ", () => {
@@ -175,6 +175,22 @@ describe("Test context service", () => {
                 expect(res).toBeDefined();
                 expect(res.a1).toEqual(a1);
                 expect(res.a3).toEqual(a3);
+            });
+        });
+        
+        it("it should get list of keys", () => {
+            opts = { };
+            let params = {
+                instanceId: instanceId,
+                keys: []
+            };
+            return broker.call("context.getKeys", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(3);
+                expect(res[0]).toEqual({ instanceId: instanceId, ownerId: ownerId, key:"a1" });
+                expect(res).toContainEqual({ instanceId: instanceId, ownerId: ownerId, key:"a1" });
+                expect(res).toContainEqual({ instanceId: instanceId, ownerId: ownerId, key:"a2" });
+                expect(res).toContainEqual({ instanceId: instanceId, ownerId: ownerId, key:"a3" });
             });
         });
         
