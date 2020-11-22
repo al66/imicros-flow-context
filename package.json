@@ -1,6 +1,6 @@
 {
   "name": "imicros-flow-context",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Moleculer persistent context store",
   "main": "index.js",
   "directories": {
@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "jest --coverage --no-cache",
+    "test-travis": "jest --coverage --no-cache --config=travis.js",
     "test-local": "jest --coverage --no-cache --config=local.js",
     "test-context": "jest test/context.spec.js --no-cache --config=local.js"
   },
@@ -45,13 +46,13 @@
   },
   "homepage": "https://github.com/al66/imicros-flow-context#readme",
   "devDependencies": {
-    "jest": "^26.0.1",
-    "moleculer": "^0.14.6",
-    "uuid": "^8.0.0"
+    "jest": "^26.6.3",
+    "moleculer": "^0.14.11",
+    "uuid": "^8.3.1"
   },
   "dependencies": {
-    "cassandra-driver": "^4.5.2",
+    "cassandra-driver": "^4.6.0",
     "imicros-acl": "^0.0.4",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.20"
   }
 }

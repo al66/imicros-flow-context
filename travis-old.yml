@@ -1,0 +1,48 @@
+dist: xenial
+
+language: node_js
+
+node_js:
+  - stable
+
+sudo: required
+
+#services:
+#- cassandra
+
+before_install:
+# cassandra: Requires OpenJDK JRE 8
+- sudo apt install openjdk-8-jre -y
+- java -version
+# cassandra: Install Python 2.7
+- sudo apt install python -y
+- python -V
+# cassandra: Install the latest stable release of Apache Cassandra
+- echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+- curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+#- sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-key A278B781FE4B2BDA
+- sudo apt-get update
+- sudo apt-get install cassandra
+# cassandra: Start the daemon
+#  - sudo sh -c "echo 'JVM_OPTS=\"$JVM_OPTS -Djava.net.preferIPv4Stack=false\"' >> /usr/local/cassandra/conf/cassandra-env.sh"
+- sudo service cassandra start
+
+install:
+  - npm install
+
+before_script:
+  - bash travis/setup_cassandra.sh
+
+script:
+  - npm test
+  
+# Send coverage data to Coveralls
+after_script:
+  - cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js  
+
+notifications:
+  email:
+    recipients:
+      - andreas.leinen@imicros.de
+    on_success: never # default: change
+    on_failure: always # default: always

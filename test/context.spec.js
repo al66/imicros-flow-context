@@ -250,26 +250,30 @@ describe("Test context service", () => {
 
     describe("Test token ", () => {
 
-        let opts, instanceId, tokenA, tokenB, tokenC;
+        let opts, processId = uuid(), instanceId = uuid(), elementId = uuid();
+        
+        let token = ["ACTIVITY.ACTIVATED", "ACTIVITY.PREPARED", "ACTIVITY.COMPLETED"].map(status => {
+            return {
+                processId: processId,
+                instanceId: instanceId,
+                elementId: elementId,
+                status: status
+            };
+        });
         
         beforeEach(() => {
-            opts = { meta: { user: { id: `1-${timestamp}` , email: `1-${timestamp}@host.com` }, groupId: `g-${timestamp}` } };
+            opts = { meta: { user: { id: `1-${timestamp}` , email: `1-${timestamp}@host.com` }, ownerId: `g-${timestamp}` } };
         });
 
         
-        it("it should emit token A", () => {
-            instanceId = uuid();
-            tokenA = {
-                processId: uuid(),
-                instanceId: uuid(),
-                elementId: uuid(),
-                status: "ACTIVITY.ACTIVATED"
-            };
+        it("it should save token A", () => {
             let params = {
-                instanceId: instanceId,
-                emit: [tokenA]
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                elementId: token[0].elementId,
+                token: token[0]
             };
-            return broker.call("context.updateToken", params, opts).then(res => {
+            return broker.call("context.saveToken", params, opts).then(res => {
                 expect(res).toEqual(true);
             });
             
@@ -277,69 +281,92 @@ describe("Test context service", () => {
  
         it("it should return token A", () => {
             let params = {
-                instanceId: instanceId
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                elementId: token[0].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(1);
-                expect(res).toContainEqual(tokenA);
+                expect(res).toContainEqual(token[0]);
             });
             
         });
  
-        it("it should consume token A and emit token B and C", () => {
-            instanceId = uuid();
-            tokenB = {
-                processId: uuid(),
-                instanceId: uuid(),
-                elementId: uuid(),
-                status: "ACTIVITY.ACTIVATED"
-            };
-            tokenC = {
-                processId: uuid(),
-                instanceId: uuid(),
-                elementId: uuid(),
-                status: "ACTIVITY.ACTIVATED"
-            };
+        
+        it("it should save token B", () => {
             let params = {
-                instanceId: instanceId,
-                consume: [tokenA],
-                emit: [tokenB,tokenC]
+                processId: token[1].processId,
+                instanceId: token[1].instanceId,
+                elementId: token[1].elementId,
+                token: token[1]
             };
-            return broker.call("context.updateToken", params, opts).then(res => {
+            return broker.call("context.saveToken", params, opts).then(res => {
                 expect(res).toEqual(true);
             });
             
         });
-        
-        it("it should return token B and C", () => {
+ 
+        it("it should return token A and B", () => {
             let params = {
-                instanceId: instanceId
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                elementId: token[0].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
-                expect(res).toContainEqual(tokenB);
-                expect(res).toContainEqual(tokenC);
+                expect(res).toContainEqual(token[0]);
+                expect(res).toContainEqual(token[1]);
             });
             
         });
 
-        it("it should consume token B and C", () => {
-            instanceId = uuid();
+        it("it should remove token A", () => {
             let params = {
-                instanceId: instanceId,
-                consume: [tokenB,tokenC]
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                elementId: token[0].elementId,
+                token: token[0]
             };
-            return broker.call("context.updateToken", params, opts).then(res => {
+            return broker.call("context.removeToken", params, opts).then(res => {
                 expect(res).toEqual(true);
             });
             
         });
-        
+
+        it("it should return token B", () => {
+            let params = {
+                processId: token[1].processId,
+                instanceId: token[1].instanceId,
+                elementId: token[1].elementId
+            };
+            return broker.call("context.getToken", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(1);
+                expect(res).toContainEqual(token[1]);
+            });
+            
+        });
+ 
+        it("it should remove token B", () => {
+            let params = {
+                processId: token[1].processId,
+                instanceId: token[1].instanceId,
+                elementId: token[1].elementId,
+                token: token[1]
+            };
+            return broker.call("context.removeToken", params, opts).then(res => {
+                expect(res).toEqual(true);
+            });
+            
+        });
+
         it("it should return an empty array", () => {
             let params = {
-                instanceId: instanceId
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                elementId: token[0].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
                 expect(res).toBeDefined();
