@@ -178,6 +178,20 @@ describe("Test context service", () => {
             });
         });
         
+        it("it should get key a3 of context A", () => {
+            opts = { };
+            let a3 = { val: "something else" };
+            let params = {
+                instanceId: instanceId,
+                keys: ["a3"]
+            };
+            return broker.call("context.getKeys", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.a1).not.toBeDefined();
+                expect(res.a3).toEqual(a3);
+            });
+        });
+        
         it("it should get list of keys", () => {
             opts = { };
             let params = {
