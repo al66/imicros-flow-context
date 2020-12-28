@@ -391,6 +391,127 @@ describe("Test context service", () => {
 
     });
     
+    describe("Test instance token ", () => {
+
+        let opts, processId = uuid(), instanceId = uuid(), elementId = uuid();
+        
+        let token = ["ACTIVITY.ACTIVATED", "ACTIVITY.PREPARED", "ACTIVITY.COMPLETED"].map(status => {
+            return {
+                processId: processId,
+                instanceId: instanceId,
+                elementId: elementId,
+                status: status
+            };
+        });
+        
+        beforeEach(() => {
+            opts = { meta: { user: { id: `1-${timestamp}` , email: `1-${timestamp}@host.com` }, ownerId: `g-${timestamp}` } };
+        });
+
+        
+        it("it should save token A", () => {
+            let params = {
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                token: token[0]
+            };
+            return broker.call("context.saveToken", params, opts).then(res => {
+                expect(res).toEqual(true);
+            });
+            
+        });
+ 
+        it("it should return token A", () => {
+            let params = {
+                processId: token[0].processId,
+                instanceId: token[0].instanceId
+            };
+            return broker.call("context.getToken", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(1);
+                expect(res).toContainEqual(token[0]);
+            });
+            
+        });
+ 
+        
+        it("it should save token B", () => {
+            let params = {
+                processId: token[1].processId,
+                instanceId: token[1].instanceId,
+                token: token[1]
+            };
+            return broker.call("context.saveToken", params, opts).then(res => {
+                expect(res).toEqual(true);
+            });
+            
+        });
+ 
+        it("it should return token A and B", () => {
+            let params = {
+                processId: token[0].processId,
+                instanceId: token[0].instanceId
+            };
+            return broker.call("context.getToken", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(2);
+                expect(res).toContainEqual(token[0]);
+                expect(res).toContainEqual(token[1]);
+            });
+            
+        });
+
+        it("it should remove token A", () => {
+            let params = {
+                processId: token[0].processId,
+                instanceId: token[0].instanceId,
+                token: token[0]
+            };
+            return broker.call("context.removeToken", params, opts).then(res => {
+                expect(res).toEqual(true);
+            });
+            
+        });
+
+        it("it should return token B", () => {
+            let params = {
+                processId: token[1].processId,
+                instanceId: token[1].instanceId
+            };
+            return broker.call("context.getToken", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(1);
+                expect(res).toContainEqual(token[1]);
+            });
+            
+        });
+ 
+        it("it should remove token B", () => {
+            let params = {
+                processId: token[1].processId,
+                instanceId: token[1].instanceId,
+                token: token[1]
+            };
+            return broker.call("context.removeToken", params, opts).then(res => {
+                expect(res).toEqual(true);
+            });
+            
+        });
+
+        it("it should return an empty array", () => {
+            let params = {
+                processId: token[0].processId,
+                instanceId: token[0].instanceId
+            };
+            return broker.call("context.getToken", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(0);
+            });
+            
+        });
+
+    });
+    
     describe("Test stop broker", () => {
         it("should stop the broker", async () => {
             expect.assertions(1);
