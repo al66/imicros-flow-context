@@ -10,7 +10,7 @@ install:
   - npm install
 
 script:
-  - npm test-travis
+  - npm run test-travis
   
 # Send coverage data to Coveralls
 after_script:
