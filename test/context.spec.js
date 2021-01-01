@@ -300,9 +300,9 @@ describe("Test context service", () => {
                 elementId: token[0].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(1);
-                expect(res).toContainEqual(token[0]);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(1);
+                expect(res.token).toContainEqual(token[0]);
             });
             
         });
@@ -328,10 +328,10 @@ describe("Test context service", () => {
                 elementId: token[0].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
-                expect(res).toContainEqual(token[0]);
-                expect(res).toContainEqual(token[1]);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(2);
+                expect(res.token).toContainEqual(token[0]);
+                expect(res.token).toContainEqual(token[1]);
             });
             
         });
@@ -356,9 +356,9 @@ describe("Test context service", () => {
                 elementId: token[1].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(1);
-                expect(res).toContainEqual(token[1]);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(1);
+                expect(res.token).toContainEqual(token[1]);
             });
             
         });
@@ -383,8 +383,8 @@ describe("Test context service", () => {
                 elementId: token[0].elementId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(0);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(0);
             });
             
         });
@@ -427,9 +427,9 @@ describe("Test context service", () => {
                 instanceId: token[0].instanceId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(1);
-                expect(res).toContainEqual(token[0]);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(1);
+                expect(res.token).toContainEqual(token[0]);
             });
             
         });
@@ -453,10 +453,10 @@ describe("Test context service", () => {
                 instanceId: token[0].instanceId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
-                expect(res).toContainEqual(token[0]);
-                expect(res).toContainEqual(token[1]);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(2);
+                expect(res.token).toContainEqual(token[0]);
+                expect(res.token).toContainEqual(token[1]);
             });
             
         });
@@ -479,9 +479,9 @@ describe("Test context service", () => {
                 instanceId: token[1].instanceId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(1);
-                expect(res).toContainEqual(token[1]);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(1);
+                expect(res.token).toContainEqual(token[1]);
             });
             
         });
@@ -504,8 +504,8 @@ describe("Test context service", () => {
                 instanceId: token[0].instanceId
             };
             return broker.call("context.getToken", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(0);
+                expect(res.token).toBeDefined();
+                expect(res.token.length).toEqual(0);
             });
             
         });
