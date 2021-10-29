@@ -77,13 +77,12 @@ describe("Test context service", () => {
                     cassandra: {
                         contactPoints: process.env.CASSANDRA_CONTACTPOINTS || "127.0.0.1", 
                         datacenter: process.env.CASSANDRA_DATACENTER || "datacenter1", 
-                        keyspace: process.env.CASSANDRA_KEYSPACE || "imicros_flow" 
+                        keyspace: process.env.CASSANDRA_KEYSPACE_FLOW || "imicros_flow" 
                     },
                     services: {
                         keys: "keys"
                     }
-                },
-                dependencies: ["keys"]
+                }
             }));
             await broker.start();
             expect(service).toBeDefined();

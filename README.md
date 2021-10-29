@@ -1,5 +1,4 @@
 # imicros-flow-context
-[![Build Status](https://travis-ci.org/al66/imicros-flow-context.svg?branch=master)](https://travis-ci.org/al66/imicros-flow-context)
 [![Coverage Status](https://coveralls.io/repos/github/al66/imicros-flow-context/badge.svg?branch=master)](https://coveralls.io/github/al66/imicros-flow-context?branch=master)
 
 [Moleculer](https://github.com/moleculerjs/moleculer) service for process instances context store
