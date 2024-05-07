@@ -5,6 +5,10 @@
 
 All values are encrypted before stored in cassandra database.
 
+> [!IMPORTANT]  
+> Moved to/integrated in imicros-core.
+
+
 ## Installation
 ```
 $ npm install imicros-flow-context --save
